@@ -1,0 +1,7 @@
+gunicorn
+requests
+beautifulsoup4
+flask
+flask_wtf
+flask-bootstrap
+pymobird

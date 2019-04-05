@@ -1,0 +1,68 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+    RecipeBird - 咕咕菜谱机
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .content {
+            max-width: 720px;
+            display: block;
+            margin: 50px auto;
+        }
+
+        .foot {
+            text-align: center;
+            margin: 150px auto 30px;
+        }
+    </style>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+
+
+
+{% block content %}
+    <div id="container">
+        <div class="content">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-{{ message['code'] }}">
+                    <button type="button" class="close" data-dismiss="alert">&times</button>
+                    {{ message['msg'] }}
+                </div>
+            {% endfor %}
+
+            <span style="font-size: 2em;">RecipeBird</span> | 咕咕菜谱机
+            <hr>
+            <br/>
+
+            {{ wtf.quick_form(form) }}
+
+
+            <div class="foot">
+
+                <p>
+                    <a href="https://workflow.is/workflows/4851e97ccfcd4325b3d3ddf1780b6c87"
+                       target="_blank">Workflow</a>
+                    |
+                    <a href="https://github.com/noviachen/RecipeBird" target="_blank">Github Repository</a>
+                </p>
+                <p>Powered By <a href="https://www.python.org" target="_blank">Python</a>
+                    & <a href="http://flask.pocoo.org" target="_blank">Flask</a>.
+                </p>
+                <p>Copyright © 2018 <a href="https://noviachen.github.io/" target="_blank">uznEnehC</a>. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
