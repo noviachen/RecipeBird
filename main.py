@@ -51,7 +51,11 @@ def get_recipe(recipe_url):
         recipe_steps_list.append(each_step_no + '\n' + each_step_text + '\n')
     recipe_steps = '\n' + '\n'.join(recipe_steps_list)
 
-    recipe_tips = html_source.find('div', id='tips').p.get_text()  # 6: 提示
+    try:
+        recipe_tips = html_source.find('div', id='tips').p.get_text()  # 6: 提示
+
+    except:
+        recipe_tips = '无'
     recipe_tips = '\n\n【小贴士】' + recipe_tips
 
     return recipe_name + \

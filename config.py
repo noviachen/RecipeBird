@@ -3,7 +3,7 @@
 # 唯一需要自己填写的参数，其他参数可以保持不变哈
 AK = 'e78ad5c116324'
 
-CSRF_ENABLED = True
+WTF_CSRF_ENABLED = False
 SECRET_KEY = 'you will never guess wa ka ka ka ka ka'
 
 host = '0.0.0.0'
