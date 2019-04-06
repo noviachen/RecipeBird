@@ -2,7 +2,7 @@
 # Author: uznEnehC
 # Blog: https://noviachen.github.io/
 # Python Verion: 3.6
-# 感谢 Windfarer 提供的咕咕机 Python API (https://github.com/Windfarer/pymobird)
+# 感谢 Windfarer 的咕咕机 Python API (https://github.com/Windfarer/pymobird)
 
 import config
 import requests
