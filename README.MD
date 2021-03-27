@@ -8,7 +8,7 @@
 
 ![recipebird-heroku](https://i.loli.net/2020/10/07/g9YMx5XRP4vkpoH.jpg)
 
-iOS 用户也可以使用 Workflow (快捷指令)，前往 [https://www.icloud.com/shortcuts/...](https://www.icloud.com/shortcuts/24cc95dc3d174a199f36f9f25da8b613) 进行下载，里面有详细的使用说明。
+iOS 用户也可以使用 Workflow (快捷指令)，前往 [https://www.icloud.com/shortcuts/...](https://www.icloud.com/shortcuts/37700b397af84ea19593ccb384b7cb26) 进行下载，里面有详细的使用说明。
 
 ![recipe-workflow](https://i.loli.net/2020/10/07/OMxYAF9d17vflJb.jpg)
 
