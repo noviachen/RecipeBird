@@ -22,46 +22,55 @@ app.config.from_object(config)
 ak_default = config.AK
 
 
-# 获取下厨房菜谱内容(使用移动端URL)
+# 获取下厨房菜谱内容(移动端URL有问题，改为使用PC端URL)
 # 同时对每行内容添加换行符等，暂时不考虑图片
 def get_recipe(recipe_url):
-    resp = requests.get(recipe_url).text
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
+    }
+    resp = requests.get(recipe_url, headers=headers).text
     html_source = BeautifulSoup(resp, 'html.parser')
 
     # 菜谱标题
-    recipe_name = html_source.h1.get_text()
+    recipe_name = html_source.h1.get_text().replace(' ', '').replace('\n', '')
     recipe_name = '《' + recipe_name + '》' + '\n\n'
 
     # 材料及用量
-    recipe_materials = html_source.find('section', id='ings').find_all('li')
+    recipe_materials = html_source.find(
+        name='div', attrs={'class': 'ings'}).find_all('tr')
     recipe_materials_list = []
     for each_material in recipe_materials:
-        things = each_material.find_all('span')
-        ingredient = things[0].get_text()
-        weight = things[1].get_text()
+        things = each_material.find_all('td')
+        ingredient = things[0].get_text().replace(' ', '').replace('\n', '')
+        weight = things[1].get_text().replace(' ', '').replace('\n', '')
         recipe_materials_list.append(ingredient + '   ' + weight)
     recipe_materials = '【材料及用量】\n' + '\n'.join(recipe_materials_list) + '\n\n'
 
     # 做法及步骤
-    recipe_steps = html_source.find('section', id='steps').find_all('li')
+    recipe_steps = html_source.find(
+        name='div', attrs={'class': 'steps'}).find_all('li')
     recipe_steps_list = []
+    each_step_no = 0  # 初始化步骤号
     for step in recipe_steps:
-        each_step_no = step.find('aside').get_text()  # 步骤号
+        each_step_no = each_step_no + 1  # 步骤号
         each_step_text = step.p.get_text()  # 步骤内容
-        recipe_steps_list.append(each_step_no + '\n' + each_step_text + '\n')
+        recipe_steps_list.append(
+            str(each_step_no) + ' '*3 + each_step_text + '\n')
     recipe_steps = '\n' + '\n'.join(recipe_steps_list)
+    print(recipe_steps)
 
     try:
-        recipe_tips = html_source.find('div', id='tips').p.get_text()  # 6: 提示
+        recipe_tips = html_source.find(
+            name='div', attrs={'class': 'tip'}).p.get_text()  # 6: 提示
 
     except:
         recipe_tips = '无'
     recipe_tips = '\n\n【小贴士】' + recipe_tips
 
     return recipe_name + \
-           recipe_materials + \
-           recipe_steps + \
-           recipe_tips
+        recipe_materials + \
+        recipe_steps + \
+        recipe_tips
 
 
 # Flask：页面上的表单
@@ -121,8 +130,8 @@ def print_memo_paper(memobird_id, ak, recipe_id):
     if ak == 'akdefault':
         ak = ak_default
 
-    recipe_content = get_recipe('https://m.xiachufang.com/recipe/' + recipe_id)
-    print(recipe_content)
+    recipe_content = get_recipe(
+        'https://www.xiachufang.com/recipe/' + recipe_id)
     bird = SimplePymobird(ak=ak, device_id=memobird_id)
     bird.print_text(recipe_content)
 
